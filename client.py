@@ -2,12 +2,13 @@ import time
 import socket
 
 RATE = 50  # 发包速率，单位：包/秒
-SERVER_IP = "192.168.0.105"
+SERVER_IP = '192.168.0.100'
 PORT = 8000
-BYTE_NUM = 10   # 发送内容的字节长度(0...1472)
+BYTE_NUM = 500   # 发送内容的字节长度(0...1472)
 
 def udp():
     udp_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    # udp_socket.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
 
     mes = ""                            # 构造一定字节的内容
     for i in range(0, BYTE_NUM + 1):
@@ -24,7 +25,7 @@ def udp():
         else:
             ts += interval
 
-        udp_socket.sendto(mes.encode(), (SERVER_IP, 8000))
+        udp_socket.sendto(mes.encode(), (SERVER_IP, PORT))
         print("Have sent a packet to ", SERVER_IP, "\tts: ", int(time.time() * 1000))
 
 def tcpip():
